@@ -30,6 +30,10 @@
         "python.testing.unittestEnabled": false,
     },
     "extensions": {
+        "unwantedRecommendations": [
+            "ms-python.vscode-pylance",
+            "ms-toolsai.jupyter",
+        ],
         "recommendations": [
             // PYTHON EXTENSIONS
             "ms-python.python",
