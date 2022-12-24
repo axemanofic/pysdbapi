@@ -102,7 +102,7 @@ unsafe-load-any-extension=no
 
 
 [REPORTS]
-
+output-format=json
 # Python expression which should return a score less than or equal to 10. You
 # have access to the variables 'fatal', 'error', 'warning', 'refactor',
 # 'convention', and 'info' which contain the number of messages in each

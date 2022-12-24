@@ -1,13 +1,13 @@
-import sqlite3 as db
-from typing import Any, Callable, OrderedDict, Union
+from typing import Any, Callable, OrderedDict, Union, Type
+from enum import Enum
 
 from .type_hints import *
-from .utils import get_list_ordereddict
+from .utils import *
 from .exceptions import ModulePrettyTableNotFound
 
-
 class DBApi:
-    def __init__(self, settings: dict[str, Union[str, int]]) -> None:
+    def __init__(self, db: Enum, settings: dict[str, Union[str, int]]) -> None:
+        self.db = get_database(db)
         self.settings: dict = settings
 
     def __get_sql(
@@ -28,7 +28,7 @@ class DBApi:
         params: tuple,
     ) -> ExecutorResult:
         try:
-            connection = db.connect(**self.settings)
+            connection = self.db.connect(**self.settings)
             cursor = connection.cursor()
             cursor.execute(sql, params)
             result: ExecutorResult = get_result(cursor)
@@ -48,11 +48,9 @@ class DBApi:
                     try:
                         from prettytable import from_db_cursor
                     except (ImportError, ModuleNotFoundError):
-                        raise ModulePrettyTableNotFound(
-                            "Requires `prettytable` to be installed. Use 'pip install prettytable'"
-                        )
-
-                    return self.__execute(from_db_cursor, sql, params)
+                        raise Exception("Module 'prettytable' prettytable not installed")
+                    else:
+                        return self.__execute(from_db_cursor, sql, params)
                 return self.__execute(get_list_ordereddict, sql, params)
 
             return main

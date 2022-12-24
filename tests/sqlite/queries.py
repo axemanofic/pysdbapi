@@ -1,10 +1,10 @@
 from typing import OrderedDict, Union
 
-from pysdbapi import DBApi
+from pysdbapi import DBApi, DataBase
 
 from .consts import DATABASE_SETTINGS
 
-db = DBApi(DATABASE_SETTINGS)
+db = DBApi(DataBase.SQLITE, DATABASE_SETTINGS)
 
 
 @db.execute_sql()

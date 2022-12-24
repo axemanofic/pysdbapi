@@ -68,9 +68,9 @@ def test_get_post_by_id(database, pk):
 def test_get_all_posts__table(database):
     try:
         posts = get_all_posts__table()
-    except ModulePrettyTableNotFound as exc:
+    except Exception as e:
         assert (
-            exc.__str__()
+            e.__str__()
             == "Requires `prettytable` to be installed. Use 'pip install prettytable'"
         )
     else:
